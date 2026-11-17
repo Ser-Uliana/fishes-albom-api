@@ -32,12 +32,14 @@
     "@prisma/composer-prisma-cloud": "0.38.0",
     "@prisma/orm-postgres": "8.0.0-rc.23",
     "alchemy": "2.0.0-beta.84",
+    "cors": "^2.8.6",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "temporal-polyfill": "^1.0.6"
   },
   "devDependencies": {
     "@prisma/dev": "0.25.2",
+    "@types/cors": "^2.8.19",
     "@types/node": "^26.6.6",
     "prisma": "8.0.0-rc.33",
     "tsdown": "^0.23.1",

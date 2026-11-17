@@ -1,12 +1,9 @@
-
-import { prisma } from "../../prisma/prisma";
+import { db } from "../../prisma/db";
 
 export const getAllFishTypes = () => {
-  return prisma.fishType.findMany();
+  return db.orm.public.FishType.all();
 };
 
 export const getFishTypeById = (id: number) => {
-  return prisma.fishType.findUnique({
-    where: { id },
-  });
+  return db.orm.public.FishType.where({ id }).first();
 };

@@ -3,9 +3,12 @@ import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
+import cors from "cors";  
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(cors({origin:["http://localhost:3001", "https://fishes-albom-front.vercel.app"]}))
   const rawPort = (process.env.PORT ?? "").trim();
   const parsedPort = rawPort.length > 0 ? Number(rawPort) : Number.NaN;
   const port =

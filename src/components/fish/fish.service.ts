@@ -1,16 +1,9 @@
-
-
-import { prisma } from "../../prisma/prisma";
+import { db } from "../../prisma/db";
 
 export const getAllFish = () => {
-  return prisma.fish.findMany({
-    include: { fishType: true },
-  });
+  return db.orm.public.Fish.include("fishType").all();
 };
 
 export const getFishById = (id: number) => {
-  return prisma.fish.findUnique({
-    where: { id },
-    include: { fishType: true },
-  });
+  return db.orm.public.Fish.where({ id }).include("fishType").first();
 };
