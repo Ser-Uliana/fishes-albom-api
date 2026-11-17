@@ -1,21 +1,23 @@
 // use prisma-8
 
-model User {
-  id        Int                @id @default(autoincrement())
-  email     String             @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt DateTime           @default(now()) @onCreate(now())
-  updatedAt temporal.UpdatedAt
+model FishType {
+  id    Int    @id @default(autoincrement())
+  name  String?
+  fish  Fish[]
 }
 
-model Post {
-  id        Int                @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User               @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt DateTime           @default(now()) @onCreate(now())
-  updatedAt temporal.UpdatedAt
+model Fish {
+  id          Int       @id @default(autoincrement())
+  name        String?
+  image       String?
+  description String?
+  isCaught     Boolean   @default(false)
+  place        String?
+  bait         String?
+  date         DateTime
+  comments     String?
+  idType       Int
+  weight       Float?
+
+  fishType     FishType  @relation(fields: [idType], references: [id])
 }
