@@ -6,6 +6,7 @@ import service from "../service.ts";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({ origin: true, methods: ["GET", "POST", "PUT", "PATCH", "DELETE"] });
 
   app.use(
     cors({

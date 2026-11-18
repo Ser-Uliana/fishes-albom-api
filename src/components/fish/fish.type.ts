@@ -12,3 +12,17 @@ export type Fish = {
   weight: number | null;
   fishType: { id: number; name: string };
 };
+
+export type  FishUpdate ={
+  idType: number;
+  name: string;
+  description: string;
+  image: string | null;
+  isCaught: boolean;
+  bait: string;
+  place: string;
+  date: string;
+  comments: string;
+  weight: number | null;
+  fishType: { id: number; name: string };
+};
