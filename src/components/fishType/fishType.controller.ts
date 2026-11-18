@@ -15,7 +15,7 @@ export class FishTypeController {
     return type;
   }
 
-  @Get(":id")
+  @Get(":id/color")
   async findColor(@Param("id", ParseIntPipe) id: number){
     const color = await getFishColorById(id);
     if (!color) throw new NotFoundException("Fish type not found");
