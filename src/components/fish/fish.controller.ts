@@ -21,8 +21,13 @@ export class FishController {
     @Param("id", ParseIntPipe) id: number,
     @Body() data: FishUpdate,
   ) {
-    const fish = await editFish(id, data);
-    if (!fish) throw new NotFoundException("Fish not found");
-    return fish;
+    try {
+      const fish = await editFish(id, data);
+      if (!fish) throw new NotFoundException("Fish not found");
+      return fish;
+    } catch (e) {
+      console.error("PUT /fish error:", e);
+      throw e;
+    }
   }
 }

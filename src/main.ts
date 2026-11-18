@@ -1,19 +1,22 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
-import cors from "cors";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
 import service from "../service.ts";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors({ origin: true, methods: ["GET", "POST", "PUT", "PATCH", "DELETE"] });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(
-    cors({
+  app.useBodyParser("json", { limit: "5mb" });
 
-      origin: ["http://localhost:3001", "https://fishes-albom-front.vercel.app", "https://fishes-albom-front-exw865o2k-ser-uliana.vercel.app"],
-    }),
-  );
+  app.enableCors({
+    origin: [
+      "http://localhost:3001",
+      "https://fishes-albom-front.vercel.app",
+      /\.vercel\.app$/,
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  });
 
   const port = service.port();
   await app.listen(port, "0.0.0.0");

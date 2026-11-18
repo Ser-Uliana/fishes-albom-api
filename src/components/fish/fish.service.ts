@@ -14,9 +14,9 @@ export type FishUpdate = Partial<Omit<Fish, "id" | "fishType" | "date">> & {
 };
 
 export const editFish = (id: number, data: FishUpdate) => {
-  const { date, ...rest } = data;
+  const { id: _id, fishType: _fishType, date, ...rest } = data as any;
   return db.orm.public.Fish.where({ id }).update({
     ...rest,
-    ...(date !== undefined && { date: new Date(date) }),
+    ...(date ? { date: new Date(date) } : {}),
   });
 };
