@@ -1,20 +1,21 @@
 import "reflect-metadata";
-
 import { NestFactory } from "@nestjs/core";
-
+import cors from "cors";
 import { AppModule } from "./app.module";
-import cors from "cors";  
+import service from "../service.ts";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(cors({origin:["http://localhost:3001", "https://fishes-albom-front.vercel.app"]}))
-  const rawPort = (process.env.PORT ?? "").trim();
-  const parsedPort = rawPort.length > 0 ? Number(rawPort) : Number.NaN;
-  const port =
-    Number.isFinite(parsedPort) && parsedPort >= 0 && parsedPort <= 65535 ? parsedPort : 3000;
-  await app.listen(port);
-  console.log(`Server running at http://localhost:${port}`);
+  app.use(
+    cors({
+      origin: ["http://localhost:3001", "https://fishes-albom-front.vercel.app"],
+    }),
+  );
+
+  const port = service.port();
+  await app.listen(port, "0.0.0.0");
+  console.log(`Server running on port ${port}`);
 }
 
 bootstrap().catch((error) => {
