@@ -1,15 +1,15 @@
 import "reflect-metadata";
-
 import { NestFactory } from "@nestjs/core";
-
+import cors from "cors";
 import { AppModule } from "./app.module";
-import cors from "cors";  
+import service from "../service.ts";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(
     cors({
+
       origin: ["http://localhost:3001", "https://fishes-albom-front.vercel.app", "https://fishes-albom-front-exw865o2k-ser-uliana.vercel.app"],
     }),
   );
