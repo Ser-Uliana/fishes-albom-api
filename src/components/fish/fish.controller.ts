@@ -1,5 +1,6 @@
-import { Controller, Get, NotFoundException, Param, ParseIntPipe } from "@nestjs/common";
-import { getAllFish, getFishById } from "./fish.service";
+import { Controller, Get, NotFoundException, Param, ParseIntPipe, Put } from "@nestjs/common";
+import { editFish, getAllFish, getFishById } from "./fish.service";
+import type { Fish } from "./fish.type";
 
 @Controller("fish")
 export class FishController {
@@ -12,6 +13,13 @@ export class FishController {
   async findOne(@Param("id", ParseIntPipe) id: number) {
     const fish = await getFishById(id);
     if (!fish) throw new NotFoundException("Fish not found");
+    return fish;
+  }
+
+  @Put(":id")
+  async changeOne(@Param("id", ParseIntPipe) id: number, data: Fish) {
+    const fish = await editFish(id, data);
+    if (!fish) throw new NotFoundException("Fish not edit");
     return fish;
   }
 }
