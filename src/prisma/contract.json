@@ -160,6 +160,13 @@
           },
           "FishType": {
             "fields": {
+              "color": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "id": {
                 "nullable": false,
                 "type": {
@@ -194,6 +201,9 @@
             },
             "storage": {
               "fields": {
+                "color": {
+                  "column": "color"
+                },
                 "id": {
                   "column": "id"
                 },
@@ -323,6 +333,15 @@
             },
             "FishType": {
               "columns": {
+                "color": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "gray"
+                  },
+                  "nullable": true
+                },
                 "id": {
                   "codecId": "pg/int4@1",
                   "dataType": "pg/int4",
@@ -353,7 +372,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "72ee991698b50e36185a254388457dde435c02e3f0bd8e0df77d5a388b61bcb6"
+    "storageHash": "6d8116dbcc6328ed452028974aa10b15231d5f2f763e150d2108c6e856723817"
   },
   "capabilities": {
     "postgres": {

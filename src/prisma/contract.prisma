@@ -4,6 +4,7 @@ model FishType {
   id    Int    @id @default(autoincrement())
   name  String?
   fish  Fish[]
+  color String? @default("gray")
 }
 
 model Fish {

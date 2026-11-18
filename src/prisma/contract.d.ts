@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'72ee991698b50e36185a254388457dde435c02e3f0bd8e0df77d5a388b61bcb6'>;
+  StorageHashBase<'6d8116dbcc6328ed452028974aa10b15231d5f2f763e150d2108c6e856723817'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -324,6 +324,7 @@ export namespace Models {
     readonly [RelationKeys]?: 'fishType';
   };
   export type public_FishType = {
+    color: FieldOutputTypes['public']['FishType']['color'];
     id: FieldOutputTypes['public']['FishType']['id'];
     name: FieldOutputTypes['public']['FishType']['name'];
     fish: public_Fish[];
@@ -461,6 +462,16 @@ type ContractBase = Omit<
             };
             readonly FishType: {
               columns: {
+                readonly color: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'gray'>;
+                  };
+                  readonly many: false;
+                };
                 readonly id: {
                   readonly dataType: 'pg/int4';
                   readonly codecId: 'pg/int4@1';
@@ -586,6 +597,10 @@ type ContractBase = Omit<
           };
           readonly FishType: {
             readonly fields: {
+              readonly color: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly id: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
@@ -609,6 +624,7 @@ type ContractBase = Omit<
               readonly table: 'FishType';
               readonly namespaceId: 'public';
               readonly fields: {
+                readonly color: { readonly column: 'color' };
                 readonly id: { readonly column: 'id' };
                 readonly name: { readonly column: 'name' };
               };
