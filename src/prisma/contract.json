@@ -248,6 +248,20 @@
                   "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
+              },
+              "twoFactorEnabled": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "twoFactorSecret": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
               }
             },
             "relations": {},
@@ -264,6 +278,12 @@
                 },
                 "role": {
                   "column": "role"
+                },
+                "twoFactorEnabled": {
+                  "column": "twoFactorEnabled"
+                },
+                "twoFactorSecret": {
+                  "column": "twoFactorSecret"
                 }
               },
               "namespaceId": "public",
@@ -450,6 +470,20 @@
                     "value": "user"
                   },
                   "nullable": true
+                },
+                "twoFactorEnabled": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
+                "twoFactorSecret": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
                 }
               },
               "foreignKeys": [],
@@ -467,7 +501,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "1390e06f742f98e9a188097bcd19cd276270d13b4da6b767a4b78c119ef70dd3"
+    "storageHash": "861ac7585bb1fbc6e2b48d0efc4b8803e2b2a979f7b93d4cb94081e389ae235b"
   },
   "capabilities": {
     "postgres": {

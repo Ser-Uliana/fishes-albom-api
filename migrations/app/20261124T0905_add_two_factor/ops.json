@@ -1,0 +1,132 @@
+[
+  {
+    "id": "column.public.User.twoFactorEnabled",
+    "label": "Add column \"twoFactorEnabled\" to \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "twoFactorEnabled",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"twoFactorEnabled\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorEnabled"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"twoFactorEnabled\" on \"User\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"twoFactorEnabled\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD COLUMN \"twoFactorEnabled\" bool DEFAULT false NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"twoFactorEnabled\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorEnabled"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"twoFactorEnabled\" on \"User\""
+        }
+      },
+      {
+        "description": "verify column \"twoFactorEnabled\" has type \"boolean\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorEnabled",
+          "boolean"
+        ]
+      },
+      {
+        "description": "verify column \"twoFactorEnabled\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorEnabled",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.User.twoFactorSecret",
+    "label": "Add column \"twoFactorSecret\" to \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "twoFactorSecret",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"twoFactorSecret\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorSecret"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"twoFactorSecret\" on \"User\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"twoFactorSecret\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD COLUMN \"twoFactorSecret\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"twoFactorSecret\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorSecret"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"twoFactorSecret\" on \"User\""
+        }
+      },
+      {
+        "description": "verify column \"twoFactorSecret\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "twoFactorSecret",
+          "text"
+        ]
+      }
+    ]
+  }
+]

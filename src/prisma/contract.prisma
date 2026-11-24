@@ -28,4 +28,6 @@ model User{
   email       String? 
   password    String? 
   role        String? @default('user')
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean @default(false)
 }

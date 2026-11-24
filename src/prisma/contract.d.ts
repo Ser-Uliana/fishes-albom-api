@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'1390e06f742f98e9a188097bcd19cd276270d13b4da6b767a4b78c119ef70dd3'>;
+  StorageHashBase<'861ac7585bb1fbc6e2b48d0efc4b8803e2b2a979f7b93d4cb94081e389ae235b'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -335,6 +335,8 @@ export namespace Models {
     id: FieldOutputTypes['public']['User']['id'];
     password: FieldOutputTypes['public']['User']['password'];
     role: FieldOutputTypes['public']['User']['role'];
+    twoFactorEnabled: FieldOutputTypes['public']['User']['twoFactorEnabled'];
+    twoFactorSecret: FieldOutputTypes['public']['User']['twoFactorSecret'];
     readonly [RelationKeys]?: never;
   };
 }
@@ -536,6 +538,22 @@ type ContractBase = Omit<
                   };
                   readonly many: false;
                 };
+                readonly twoFactorEnabled: {
+                  readonly dataType: 'pg/bool';
+                  readonly codecId: 'pg/bool@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/bool@1', false>;
+                  };
+                  readonly many: false;
+                };
+                readonly twoFactorSecret: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
               };
               primaryKey: { readonly columns: readonly ['id'] };
               uniques: readonly [];
@@ -697,6 +715,14 @@ type ContractBase = Omit<
                 readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly twoFactorEnabled: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
+              };
+              readonly twoFactorSecret: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
             };
             readonly relations: Record<string, never>;
             readonly storage: {
@@ -707,6 +733,8 @@ type ContractBase = Omit<
                 readonly id: { readonly column: 'id' };
                 readonly password: { readonly column: 'password' };
                 readonly role: { readonly column: 'role' };
+                readonly twoFactorEnabled: { readonly column: 'twoFactorEnabled' };
+                readonly twoFactorSecret: { readonly column: 'twoFactorSecret' };
               };
             };
           };
