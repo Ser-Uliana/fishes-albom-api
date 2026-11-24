@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'6d8116dbcc6328ed452028974aa10b15231d5f2f763e150d2108c6e856723817'>;
+  StorageHashBase<'1390e06f742f98e9a188097bcd19cd276270d13b4da6b767a4b78c119ef70dd3'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -330,12 +330,20 @@ export namespace Models {
     fish: public_Fish[];
     readonly [RelationKeys]?: 'fish';
   };
+  export type public_User = {
+    email: FieldOutputTypes['public']['User']['email'];
+    id: FieldOutputTypes['public']['User']['id'];
+    password: FieldOutputTypes['public']['User']['password'];
+    role: FieldOutputTypes['public']['User']['role'];
+    readonly [RelationKeys]?: never;
+  };
 }
 
 export declare const models: {
   public: {
     Fish: Models.public_Fish;
     FishType: Models.public_FishType;
+    User: Models.public_User;
   };
 };
 
@@ -494,6 +502,46 @@ type ContractBase = Omit<
               indexes: readonly [];
               foreignKeys: readonly [];
             };
+            readonly User: {
+              columns: {
+                readonly email: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                  readonly many: false;
+                };
+                readonly password: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly role: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'user'>;
+                  };
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [];
+              foreignKeys: readonly [];
+            };
           };
         };
       };
@@ -507,6 +555,7 @@ type ContractBase = Omit<
   readonly roots: {
     readonly Fish: { readonly namespace: 'public' & NamespaceId; readonly model: 'Fish' };
     readonly FishType: { readonly namespace: 'public' & NamespaceId; readonly model: 'FishType' };
+    readonly User: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
   };
   readonly domain: {
     readonly namespaces: {
@@ -627,6 +676,37 @@ type ContractBase = Omit<
                 readonly color: { readonly column: 'color' };
                 readonly id: { readonly column: 'id' };
                 readonly name: { readonly column: 'name' };
+              };
+            };
+          };
+          readonly User: {
+            readonly fields: {
+              readonly email: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly password: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly role: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+            };
+            readonly relations: Record<string, never>;
+            readonly storage: {
+              readonly table: 'User';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly email: { readonly column: 'email' };
+                readonly id: { readonly column: 'id' };
+                readonly password: { readonly column: 'password' };
+                readonly role: { readonly column: 'role' };
               };
             };
           };
