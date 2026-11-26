@@ -1,6 +1,7 @@
-import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
-import { addFish, editFish, getAllFish, getFishById } from "./fish.service";
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { addFish, deleteFish, editFish, getAllFish, getFishById } from "./fish.service";
 import type { Fish, FishCreate, FishUpdate } from "./fish.type";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller("fish")
 export class FishController {
@@ -39,5 +40,13 @@ export class FishController {
       console.error("POST /fish error:", e);
       throw e;
     }
+  }
+
+  @Delete(":id")
+  @UseGuards(JwtAuthGuard)
+  async remove(@Param("id", ParseIntPipe) id: number) {
+    const fish = await deleteFish(id);
+    if (!fish) throw new NotFoundException("Fish not found");
+    return fish;
   }
 }

@@ -31,3 +31,7 @@ export const addFish = (fish: FishCreate) => {
     date: fish.date ? new Date(fish.date) : new Date(),
   });
 };
+
+export const deleteFish = (id: number) => {
+  return db.orm.public.Fish.where({ id }).delete();
+};
