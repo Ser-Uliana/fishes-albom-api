@@ -27,4 +27,5 @@ export type  FishUpdate ={
   fishType: { id: number; name: string };
 };
 
-export type FishCreate = Omit<Fish, "id" | "fishType">;
+export type FishCreate = Pick<Fish, "name" | "image" | "idType"> &
+  Partial<Omit<Fish, "id" | "fishType" | "name" | "image" | "idType">>;
