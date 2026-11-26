@@ -23,9 +23,41 @@ The starter users are inserted idempotently from `src/prisma/seed.ts` on the fir
 
 ## Prisma
 
-- Contract: `src/prisma/contract.prisma`
-- Prisma and Composer config: `prisma.config.ts`
-- Composer app: `module.ts` and `service.ts`
+For update local db
+
+```bash
+npx prisma contract emit       
+npx prisma db update
+```
+
+update product db
+```bash
+psql "postgresql://ulianaserbina@localhost:5432/fishes_album" -Atc \
+  "SELECT format('UPDATE \"FishType\" SET color = %L WHERE id = %s;', color, id) FROM \"FishType\";" \
+  | psql "postgres://d1407fc4680a8586f4d3f8cd564fa432cc5c084ef32e8b01fd0e8bbd2dbba11d:sk_kUWEsqdvpUf1sQMvQgM8S@db.prisma.io:5432/postgres?sslmode=require"
+```
+
+inset to prod db
+```bash
+pg_dump "postgresql://ulianaserbina@localhost:5432/fishes_album" --data-only --table='"FishType"' --column-inserts > fishtype.sql
+psql "postgres://d1407fc4680a8586f4d3f8cd564fa432cc5c084ef32e8b01fd0e8bbd2dbba11d:sk_kUWEsqdvpUf1sQMvQgM8S@db.prisma.io:5432/postgres?sslmode=require" -f fishtype.sql
+```
+deploy
+```bash
+npm run deploy                                                              
+```
+migration
+```bash
+npm run contract:emit                                                       
+npm run migration:plan
+npm run migrate
+```
+
+sync prod and local db (not sure it work)
+```bash
+chmod +x sync-prod.sh
+PROD_URL="postgres://d1407fc4680a8586f4d3f8cd564fa432cc5c084ef32e8b01fd0e8bbd2dbba11d:sk_kUWEsqdvpUf1sQMvQgM8S@db.prisma.io:5432/postgres?sslmode=require" ./sync-prod.sh
+```
 
 After changing the contract, run:
 

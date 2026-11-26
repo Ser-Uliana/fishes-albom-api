@@ -22,3 +22,12 @@ model Fish {
 
   fishType     FishType  @relation(fields: [idType], references: [id])
 }
+
+model User{
+  id          Int     @id @default(autoincrement())
+  email       String? 
+  password    String? 
+  role        String? @default('user')
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean @default(false)
+}
