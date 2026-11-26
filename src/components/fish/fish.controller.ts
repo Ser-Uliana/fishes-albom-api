@@ -1,6 +1,6 @@
 import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { addFish, editFish, getAllFish, getFishById } from "./fish.service";
-import type { Fish, FishUpdate } from "./fish.type";
+import type { Fish, FishCreate, FishUpdate } from "./fish.type";
 
 @Controller("fish")
 export class FishController {
@@ -32,7 +32,7 @@ export class FishController {
   }
 
   @Post()
-  async add(@Body() fish: Fish) {
+  async add(@Body() fish: FishCreate) {
     try {
       return await addFish(fish);
     } catch (e) {
