@@ -26,3 +26,5 @@ export type  FishUpdate ={
   weight: number | null;
   fishType: { id: number; name: string };
 };
+
+export type FishCreate = Omit<Fish, "id" | "fishType">;
