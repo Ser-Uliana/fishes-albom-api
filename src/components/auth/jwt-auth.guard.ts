@@ -1,13 +1,8 @@
-// jwt-auth.guard.ts
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import type { CanActivate, ExecutionContext } from "@nestjs/common";
 import * as jwt from "jsonwebtoken";
 
-const SECRET: string =
-  process.env.JWT_SECRET ??
-  (() => {
-    throw new Error("JWT_SECRET is not set");
-  })();
+import { JWT_SECRET as SECRET } from "./auth.config";
 
 export type AuthUser = { id: number; role: string };
 
