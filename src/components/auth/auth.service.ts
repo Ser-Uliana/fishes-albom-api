@@ -2,14 +2,10 @@ import { ConflictException, UnauthorizedException } from "@nestjs/common";
 import { authenticator } from "otplib";
 import * as QRCode from "qrcode";
 import * as jwt from "jsonwebtoken";
-import * as bcrypt from "bcrypt";
+import { compare, hash } from "bcryptjs";
 import { db } from "../../prisma/db";
+import { JWT_SECRET as SECRET } from "./auth.config";
 
-const SECRET: string =
-  process.env.JWT_SECRET ??
-  (() => {
-    throw new Error("JWT_SECRET is not set");
-  })();
 if (!SECRET) throw new Error("JWT_SECRET is not set");
 
 const signAccess = (user: { id: number; role: string | null }) =>
@@ -42,7 +38,7 @@ export const login = async (email: string, password: string) => {
   if (!user || !user.password)
     throw new UnauthorizedException("Невірний email або пароль");
 
-  const ok = await bcrypt.compare(password, user.password);
+  const ok = await compare(password, user.password);
   if (!ok) throw new UnauthorizedException("Невірний email або пароль");
 
   if (user.twoFactorEnabled) {
@@ -105,10 +101,10 @@ export const register = async (email: string, password: string) => {
   const existing = await getUserByEmail(email);
   if (existing) throw new ConflictException("Email вже зайнятий");
 
-  const hash = await bcrypt.hash(password, 10);
+  const passwordHash = await hash(password, 10);
   const user = await db.orm.public.User.create({
     email,
-    password: hash,
+    password: passwordHash,
     role: "user",
     twoFactorEnabled: false,
   });

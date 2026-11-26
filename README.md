@@ -39,8 +39,8 @@ psql "postgresql://ulianaserbina@localhost:5432/fishes_album" -Atc \
 
 inset to prod db
 ```bash
-pg_dump "postgresql://ulianaserbina@localhost:5432/fishes_album" --data-only --table='"FishType"' --column-inserts > fishtype.sql
-psql "postgres://d1407fc4680a8586f4d3f8cd564fa432cc5c084ef32e8b01fd0e8bbd2dbba11d:sk_kUWEsqdvpUf1sQMvQgM8S@db.prisma.io:5432/postgres?sslmode=require" -f fishtype.sql
+pg_dump "postgresql://ulianaserbina@localhost:5432/fishes_album" --data-only --table='"<tableName>"' --column-inserts > {tableName}.sql
+psql "postgres://d1407fc4680a8586f4d3f8cd564fa432cc5c084ef32e8b01fd0e8bbd2dbba11d:sk_kUWEsqdvpUf1sQMvQgM8S@db.prisma.io:5432/postgres?sslmode=require" -f {tableName}.sql
 ```
 deploy
 ```bash
