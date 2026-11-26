@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict cO9aLkciCapAJZXsYceIWZRk6kr1B9ThHRYVIz4TW4y3aQPCSqq042Mz0Cec8j7
+\restrict 9cAo3crLPOqZQVFQkD6DABxXG7Re4wqozKJw0kP0NnAeM7hiWUXCgnX8TOpSRp2
 
 -- Dumped from database version 18.6 (Postgres.app)
 -- Dumped by pg_dump version 18.4
@@ -23,8 +23,8 @@ SET row_security = off;
 -- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: ulianaserbina
 --
 
-INSERT INTO public."User" (email, id, password, role, "twoFactorEnabled", "twoFactorSecret") VALUES ('serbina.u.t@gmail.com', 1, 'Qwerty1!', 'admin', false, NULL);
-INSERT INTO public."User" (email, id, password, role, "twoFactorEnabled", "twoFactorSecret") VALUES ('Kosivvlad85@gmail.com', 2, 'Qwerty1!', 'admin', false, NULL);
+INSERT INTO public."User" (email, id, password, role, "twoFactorEnabled", "twoFactorSecret") VALUES ('serbina.u.t@gmail.com', 1, '$2b$10$/UUmpZKCb8dln48a0ufM9udrImTjdODP6i87umEE6EPb0hJ/0f18C', 'admin', false, NULL);
+INSERT INTO public."User" (email, id, password, role, "twoFactorEnabled", "twoFactorSecret") VALUES ('Kosivvlad85@gmail.com', 2, '$2b$10$/UUmpZKCb8dln48a0ufM9udrImTjdODP6i87umEE6EPb0hJ/0f18C', 'admin', false, NULL);
 
 
 --
@@ -38,5 +38,5 @@ SELECT pg_catalog.setval('public."User_id_seq"', 2, true);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict cO9aLkciCapAJZXsYceIWZRk6kr1B9ThHRYVIz4TW4y3aQPCSqq042Mz0Cec8j7
+\unrestrict 9cAo3crLPOqZQVFQkD6DABxXG7Re4wqozKJw0kP0NnAeM7hiWUXCgnX8TOpSRp2
 
