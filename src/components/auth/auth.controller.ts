@@ -1,28 +1,46 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import type { CanActivate, ExecutionContext } from "@nestjs/common";
-import * as jwt from "jsonwebtoken";
+// auth.controller.ts
+import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 
-@Injectable()
-export class JwtAuthGuard implements CanActivate {
-  canActivate(context: ExecutionContext): boolean {
-    const req = context.switchToHttp().getRequest();
-    const header: string | undefined = req.headers.authorization;
+import {
+  login,
+  register,
+  setup2FA,
+  enable2FA,
+  verify2FA,
+} from "./auth.service";
+import { JwtAuthGuard } from "./jwt-auth.guard";
+import type { AuthUser } from "./jwt-auth.guard";
 
-    if (!header?.startsWith("Bearer "))
-      throw new UnauthorizedException();
+@Controller("auth")
+export class AuthController {
+  @Post("register")
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  register(@Body() body: { email: string; password: string }) {
+    return register(body.email, body.password);
+  }
 
-    try {
-      const payload = jwt.verify(
-        header.slice(7),
-        process.env.JWT_SECRET!,
-      ) as any;
+  @Post("login")
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  login(@Body() body: { email: string; password: string }) {
+    return login(body.email, body.password);
+  }
 
-      if (payload.step === "2fa") throw new UnauthorizedException();
+  @Post("2fa/verify")
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  verify(@Body() body: { tempToken: string; code: string }) {
+    return verify2FA(body.tempToken, body.code);
+  }
 
-      req.user = payload; 
-      return true;
-    } catch {
-      throw new UnauthorizedException();
-    }
+  @UseGuards(JwtAuthGuard)
+  @Post("2fa/setup")
+  setup(@Req() req: { user: AuthUser }) {
+    return setup2FA(req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post("2fa/enable")
+  enable(@Req() req: { user: AuthUser }, @Body() body: { code: string }) {
+    return enable2FA(req.user.id, body.code);
   }
 }

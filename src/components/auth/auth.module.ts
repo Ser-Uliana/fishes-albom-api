@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
-import { JwtAuthGuard } from "./auth.controller";
-
+import { APP_GUARD } from "@nestjs/core";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+import { AuthController } from "./auth.controller";
 
 @Module({
-    controllers: [JwtAuthGuard]
+  imports: [ThrottlerModule.forRoot([{ ttl: 60_000, limit: 100 }])],
+  controllers: [AuthController],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
-export class JwtAuthGuardModule {}
+export class AuthModule {}
